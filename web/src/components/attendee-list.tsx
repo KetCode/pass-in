@@ -17,8 +17,26 @@ export function AttendeeList() {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
 
+  const totalPages = Math.ceil(attendees.length / 10)
+
   function onSearchInputChange(event: ChangeEvent<HTMLInputElement>) {
     setSearch(event.target.value)
+  }
+  
+  function goToFirstPage() {
+    setPage(1)
+  }
+
+  function goToPreviousPage() {
+    setPage(page - 1)
+  }
+  
+  function goToNextPage() {
+    setPage(page + 1)
+  }
+  
+  function goToLastPage() {
+    setPage(totalPages)
   }
 
   return (
@@ -62,7 +80,7 @@ export function AttendeeList() {
                 <TableCell>{dayjs().to(attendee.createdAt)}</TableCell>
                 <TableCell>{dayjs().to(attendee.checkedInAt)}</TableCell>
                 <TableCell>
-                  <IconButton transparent className='bg-black/20 border border-white/10 rounded-md p-1.5'>
+                  <IconButton transparent>
                     <MoreHorizontal className='size-4' />
                   </IconButton>
                 </TableCell>
@@ -72,27 +90,27 @@ export function AttendeeList() {
         </tbody>
         <tfoot>
           <tr>
-            <TableCell colSpan={3} className='py-3 px-4 text-sm text-zinc-300'>
+            <TableCell colSpan={3}>
               Mostrando 10 de {attendees.length} itens
             </TableCell>
-            <TableCell colSpan={3} className='py-3 px-4 text-sm text-zinc-300 text-right'>
+            <TableCell colSpan={3} className='text-right'>
               <div className='inline-flex items-center gap-8'>
-                <span>Página {page} de {Math.ceil(attendees.length / 10)}</span>
+                <span>Página {page} de {totalPages}</span>
 
                 <div className='flex gap-1.5'>
-                  <IconButton className='bg-white/10 border border-white/10 rounded-md p-1.5'>
+                  <IconButton onClick={goToFirstPage} disabled={page === 1}>
                     <ChevronsLeft className='size-4' />
                   </IconButton>
 
-                  <IconButton className='bg-white/10 border border-white/10 rounded-md p-1.5'>
+                  <IconButton onClick={goToPreviousPage} disabled={page === 1}>
                     <ChevronLeft className='size-4' />
                   </IconButton>
 
-                  <IconButton className='bg-white/10 border border-white/10 rounded-md p-1.5'>
+                  <IconButton onClick={goToNextPage} disabled={page === totalPages}>
                     <ChevronRight className='size-4' />
                   </IconButton>
 
-                  <IconButton className='bg-white/10 border border-white/10 rounded-md p-1.5'>
+                  <IconButton onClick={goToLastPage} disabled={page === totalPages}>
                     <ChevronsRight className='size-4' />
                   </IconButton>
                 </div>
