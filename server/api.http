@@ -6,3 +6,13 @@ Content-Type: application/json
   "details": "Um evento para quem é apaixonado por programação",
   "maximumAttendees": 100
 }
+
+###
+
+POST http://localhost:3333/events/ccb44571-9a47-4a70-838f-885d7c7f3dd8/attendees
+Content-Type: application/json
+
+{
+  "name": "Teste",
+  "email": "teste@teste.com"
+}
