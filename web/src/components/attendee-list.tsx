@@ -8,7 +8,6 @@ import { TableHeader } from './table/table-header'
 import { TableCell } from './table/table-cell'
 import { TableRow } from './table/table-row'
 import { ChangeEvent, useState } from 'react'
-import { attendees } from '../data/attendees'
 
 dayjs.extend(relativeTime)
 dayjs.locale('pt-br')
