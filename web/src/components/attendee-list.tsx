@@ -23,13 +23,16 @@ interface Attendee {
 export function AttendeeList() {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
+
+  const [total, setTotal] = useState(0)
   const [attendees, setAttendees] = useState<Attendee[]>([])
 
-  const totalPages = Math.ceil(attendees.length / 10)
+  const totalPages = Math.ceil(total / 10)
 
   useEffect(() => {
     fetch('http://localhost:3333/events/ccb44571-9a47-4a70-838f-885d7c7f3dd8/attendees').then(response => response.json()).then(data => {
       setAttendees(data.attendees)
+      setTotal(data.total)
     })
   }, [page])
 
