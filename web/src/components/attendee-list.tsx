@@ -7,16 +7,31 @@ import { Table } from './table/table'
 import { TableHeader } from './table/table-header'
 import { TableCell } from './table/table-cell'
 import { TableRow } from './table/table-row'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 dayjs.extend(relativeTime)
 dayjs.locale('pt-br')
 
+interface Attendee {
+  id: string
+  name: string
+  email: string
+  createdAt: string
+  checkedInAt: string | null
+}
+
 export function AttendeeList() {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
+  const [attendees, setAttendees] = useState<Attendee[]>([])
 
   const totalPages = Math.ceil(attendees.length / 10)
+
+  useEffect(() => {
+    fetch('http://localhost:3333/events/ccb44571-9a47-4a70-838f-885d7c7f3dd8/attendees').then(response => response.json()).then(data => {
+      setAttendees(data.attendees)
+    })
+  }, [page])
 
   function onSearchInputChange(event: ChangeEvent<HTMLInputElement>) {
     setSearch(event.target.value)
@@ -63,7 +78,7 @@ export function AttendeeList() {
           </TableRow>
         </thead>
         <tbody>
-          {attendees.slice((page - 1) * 10, page * 10).map((attendee) => {
+          {attendees.map((attendee) => {
             return (
               <TableRow key={attendee.id} className='hover:bg-white/5'>
                 <TableCell>
