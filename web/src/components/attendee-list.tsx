@@ -21,7 +21,16 @@ interface Attendee {
 }
 
 export function AttendeeList() {
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState(() => {
+    const url = new URL(window.location.toString())
+
+    if (url.searchParams.has('search')) {
+      return url.searchParams.get('search') ?? ''
+    }
+
+    return ''
+  })
+
   const [page, setPage] = useState(() => {
     const url = new URL(window.location.toString())
 
@@ -51,6 +60,16 @@ export function AttendeeList() {
     })
   }, [page, search])
 
+  function setCurrentSearch(search: string) {
+    const url = new URL(window.location.toString())
+
+    url.searchParams.set('search', search)
+
+    window.history.pushState({}, "", url)
+
+    setSearch(search)
+  }
+
   function setCurrentPage(page: number) {
     const url = new URL(window.location.toString())
 
@@ -62,7 +81,7 @@ export function AttendeeList() {
   }
 
   function onSearchInputChange(event: ChangeEvent<HTMLInputElement>) {
-    setSearch(event.target.value)
+    setCurrentSearch(event.target.value)
     setCurrentPage(1)
   }
   
@@ -88,7 +107,7 @@ export function AttendeeList() {
         <h1 className="text-2xl font-bold">Participantes</h1>
         <div className="px-3 py-1.5 w-72 border border-white/10 rounded-lg flex items-center gap-3">
           <Search className='size-4 text-emerald-300' />
-          <input onChange={onSearchInputChange} className="bg-transparent flex-1 outline-none border-0 p-0 text-sm focus:ring-0" placeholder="Buscar participante..." />
+          <input onChange={onSearchInputChange} value={search} className="bg-transparent flex-1 outline-none border-0 p-0 text-sm focus:ring-0" placeholder="Buscar participante..." />
         </div>
       </div>
 
