@@ -1,6 +1,6 @@
-import { View, Text } from "react-native";
+import { View, Text, ViewProps } from "react-native";
 
-type Props = {
+type Props = ViewProps & {
   title: string
 }
 
