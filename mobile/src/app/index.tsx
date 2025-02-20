@@ -5,13 +5,25 @@ import { colors } from '@/styles/colors'
 import { Input } from '@/components/input'
 import { Button } from '@/components/button'
 import { useState } from 'react'
+import { api } from '@/server/api'
 
 export default function Home() {
   const [code, setCode] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
-  function handleAccessCredential() {
-    if (!code.trim()) {
-      return Alert.alert("Ingresso", "Informe o código do ingresso!")
+  async function handleAccessCredential() {
+    try {
+      if (!code.trim()) {
+        return Alert.alert("Ingresso", "Informe o código do ingresso!")
+      }
+  
+      setIsLoading(true)
+  
+      const { data } = await api.get(`/attendees/${code}/badge`)
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false)
+      Alert.alert("Inscrição", "Ingresso não encontrado!")
     }
   }
 
@@ -27,7 +39,7 @@ export default function Home() {
           <Input.Field placeholder='Código do ingresso' onChangeText={setCode} />
         </Input>
 
-        <Button title='Acessar credencial' onPress={handleAccessCredential} />
+        <Button title='Acessar credencial' onPress={handleAccessCredential} isLoading={isLoading} />
 
         <Link href="/register" className='text-orange-100 text-base font-medium text-center mt-4'>Ainda não possui ingresso?</Link>
       </View>
