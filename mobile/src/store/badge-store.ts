@@ -15,12 +15,14 @@ type StateProps = {
   data: BadgeStore | null
   save: (data: BadgeStore) => void
   remove: () => void
+  updateAvatar: (uri: string) => void
 }
 
 export const useBadStore = create(persist<StateProps>((set) => ({
   data: null,
   save: (data: BadgeStore) => set(() => ({ data })),
-  remove: () => set(() => ({ data: null }))
+  remove: () => set(() => ({ data: null })),
+  updateAvatar: (uri: string) => set((state) => ({ data: state.data ? { ...state.data, image: uri } : state.data })),
 }), { 
   name: 'nlw-unite:badge',
   storage: createJSONStorage(() => AsyncStorage),
