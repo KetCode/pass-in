@@ -1,17 +1,21 @@
 import { useState } from "react";
 import { Alert, Modal, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
-import { FontAwesome } from '@expo/vector-icons'
-import * as ImagePicker from 'expo-image-picker'
+import { FontAwesome } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
+import { Redirect } from "expo-router";
 
 import { colors } from "@/styles/colors";
 import { Header } from "@/components/header";
 import { Button } from "@/components/button";
 import { Credential } from "@/components/credential";
 import { QRCode } from "@/components/qrcode";
+import { useBadStore } from "@/store/badge-store";
 
 export default function Ticket() {
   const [image, setImage] = useState('')
   const [expandQRCode, setExpandQRCode] = useState(false)
+
+  const badgeStore = useBadStore()
 
   async function handleSelectImage() {
     try {
@@ -30,6 +34,10 @@ export default function Ticket() {
     }
   }
 
+  if (!badgeStore.data?.checkInURL) {
+    return <Redirect href='/' />
+  }
+
   return (
     <View className="flex-1 bg-green-500">
       <StatusBar barStyle='light-content' />
@@ -43,7 +51,7 @@ export default function Ticket() {
         <Text className="text-white font-regular text-base mt-1 mb-6">Mostre ao mundo que você vai participar do Unite Summit!</Text>
 
         <Button title="Compartilhar" />
-        <TouchableOpacity activeOpacity={0.7} className="mt-10">
+        <TouchableOpacity activeOpacity={0.7} className="mt-10" onPress={() => badgeStore.remove()}>
           <Text className="text-white font-bold text-base text-center">Remover ingresso</Text>
         </TouchableOpacity>
       </ScrollView>
