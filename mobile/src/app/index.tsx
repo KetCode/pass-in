@@ -1,15 +1,19 @@
+import { useState } from 'react'
 import {View, Image, StatusBar, Alert} from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { Link } from 'expo-router'
+import { Link, Redirect } from 'expo-router'
+
+import { api } from '@/server/api'
 import { colors } from '@/styles/colors'
 import { Input } from '@/components/input'
 import { Button } from '@/components/button'
-import { useState } from 'react'
-import { api } from '@/server/api'
+import { useBadStore } from '@/store/badge-store'
 
 export default function Home() {
   const [code, setCode] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+
+  const badgeStore = useBadStore()
 
   async function handleAccessCredential() {
     try {
@@ -20,11 +24,16 @@ export default function Home() {
       setIsLoading(true)
   
       const { data } = await api.get(`/attendees/${code}/badge`)
+      badgeStore.save(data.badge)
     } catch (error) {
       console.log(error)
       setIsLoading(false)
       Alert.alert("Inscrição", "Ingresso não encontrado!")
     }
+  }
+
+  if (badgeStore.data?.checkInURL) {
+    return <Redirect href='/ticket' />
   }
 
   return (
