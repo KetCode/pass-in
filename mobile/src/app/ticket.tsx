@@ -3,6 +3,7 @@ import { Alert, Modal, ScrollView, Share, StatusBar, Text, TouchableOpacity, Vie
 import { FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { Redirect } from "expo-router";
+import { MotiView } from "moti";
 
 import { colors } from "@/styles/colors";
 import { Header } from "@/components/header";
@@ -58,7 +59,10 @@ export default function Ticket() {
       <ScrollView className="-mt-28" contentContainerClassName="px-8 pb-8" showsVerticalScrollIndicator={false}>
         <Credential data={badgeStore.data} onChangeAvatar={handleSelectImage} onExpandQRCode={() => setExpandQRCode(true)} />
 
-        <FontAwesome name="angle-double-down" size={24} color={colors.gray[300]} className="self-center my-6" />
+        <MotiView from={{ translateY: 0 }} animate={{ translateY: 10 }} transition={{ loop: true, type: "timing", duration: 700 }} >
+          <FontAwesome name="angle-double-down" size={24} color={colors.gray[300]} className="self-center my-6" />
+        </MotiView>
+
         <Text className="text-white font-bold text-2xl mt-4">Compartilhar credencial</Text>
         <Text className="text-white font-regular text-base mt-1 mb-6">Mostre ao mundo que você vai participar do evento {badgeStore.data.eventTitle}!</Text>
 
