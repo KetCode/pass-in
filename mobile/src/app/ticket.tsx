@@ -12,7 +12,6 @@ import { QRCode } from "@/components/qrcode";
 import { useBadStore } from "@/store/badge-store";
 
 export default function Ticket() {
-  const [image, setImage] = useState('')
   const [expandQRCode, setExpandQRCode] = useState(false)
 
   const badgeStore = useBadStore()
@@ -26,7 +25,7 @@ export default function Ticket() {
       })
 
       if (result.assets){
-        setImage(result.assets[0].uri)
+        badgeStore.updateAvatar(result.assets[0].uri)
       }
     } catch (error) {
       console.log(error)
@@ -44,11 +43,11 @@ export default function Ticket() {
       <Header title="Minha Credencial" />
 
       <ScrollView className="-mt-28" contentContainerClassName="px-8 pb-8" showsVerticalScrollIndicator={false}>
-        <Credential image={image} onChangeAvatar={handleSelectImage} onExpandQRCode={() => setExpandQRCode(true)} />
+        <Credential data={badgeStore.data} onChangeAvatar={handleSelectImage} onExpandQRCode={() => setExpandQRCode(true)} />
 
         <FontAwesome name="angle-double-down" size={24} color={colors.gray[300]} className="self-center my-6" />
         <Text className="text-white font-bold text-2xl mt-4">Compartilhar credencial</Text>
-        <Text className="text-white font-regular text-base mt-1 mb-6">Mostre ao mundo que você vai participar do Unite Summit!</Text>
+        <Text className="text-white font-regular text-base mt-1 mb-6">Mostre ao mundo que você vai participar do evento {badgeStore.data.eventTitle}!</Text>
 
         <Button title="Compartilhar" />
         <TouchableOpacity activeOpacity={0.7} className="mt-10" onPress={() => badgeStore.remove()}>

@@ -2,14 +2,16 @@ import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-nati
 import { Feather } from '@expo/vector-icons'
 import { colors } from "@/styles/colors";
 import { QRCode } from "@/components/qrcode";
+import { BadgeStore } from "@/store/badge-store";
 
 type Props = {
+  data: BadgeStore
   image?: string
   onChangeAvatar?: () => void
   onExpandQRCode?: () => void
 }
 
-export function Credential({ image, onChangeAvatar, onExpandQRCode }: Props) {
+export function Credential({ data, onChangeAvatar, onExpandQRCode }: Props) {
   return (
     <View className="w-full self-stretch items-center">
       <Image source={require('@/assets/ticket/band.png')} className="w-24 h-52 z-10" />
@@ -17,16 +19,16 @@ export function Credential({ image, onChangeAvatar, onExpandQRCode }: Props) {
       <View className="bg-black/20 self-stretch items-center pb-6 border border-white/10 mx-3 rounded-2xl -mt-5">
         <ImageBackground source={require('@/assets/ticket/header.png')} className="px-6 py-8 h-40 items-center self-stretch border-b border-white/10 overflow-hidden">
           <View className="w-full flex-row items-center justify-between">
-            <Text className="text-zinc-50 text-sm font-bold">Unite Summit</Text>
-            <Text className="text-zinc-50 text-sm font-bold">#18920</Text>
+            <Text className="text-zinc-50 text-sm font-bold">{data.eventTitle}</Text>
+            <Text className="text-zinc-50 text-sm font-bold">#{data.id}</Text>
           </View>
 
           <View className="w-40 h-40 bg-black rounded-full" />
         </ImageBackground>
 
-        { image ? (
+        { data.image ? (
             <TouchableOpacity onPress={onChangeAvatar} activeOpacity={0.9}>
-              <Image source={{ uri: image }} className="w-36 h-36 rounded-full -mt-24" />
+              <Image source={{ uri: data.image }} className="w-36 h-36 rounded-full -mt-24" />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={onChangeAvatar} activeOpacity={0.9} className="w-36 h-36 rounded-full -mt-24 bg-gray-400 items-center justify-center">
@@ -35,10 +37,10 @@ export function Credential({ image, onChangeAvatar, onExpandQRCode }: Props) {
           )
         }
 
-        <Text className="font-bold text-2xl text-zinc-50 mt-4">Nara Campbell</Text>
-        <Text className="font-regular text-base text-zinc-300 mb-4">narampbell@email.com</Text>
+        <Text className="font-bold text-2xl text-zinc-50 mt-4">{data.name}</Text>
+        <Text className="font-regular text-base text-zinc-300 mb-4">{data.email}</Text>
 
-        <QRCode value="Kesse" size={120} />
+        <QRCode value={data.checkInURL} size={120} />
 
         <TouchableOpacity activeOpacity={0.7} className="mt-6" onPress={onExpandQRCode}>
           <Text className="font-body text-sm text-orange-500">Ampliar QRCode</Text>
