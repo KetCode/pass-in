@@ -71,7 +71,7 @@ export default function Ticket() {
 
       <Modal visible={expandQRCode} statusBarTranslucent>
         <View className="flex-1 bg-green-500 items-center justify-center rounded-lg shadow-md">
-          <QRCode value="Kesse" size={300} />
+          <QRCode value={badgeStore.data.checkInURL} size={300} />
           <TouchableOpacity activeOpacity={0.7} onPress={() => setExpandQRCode(false)}>
             <Text className="text-sm text-orange-500 font-body text-center mt-10">Fechar QRCode</Text>
           </TouchableOpacity>
