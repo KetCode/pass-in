@@ -1,50 +1,71 @@
-# React + TypeScript + Vite
+  
+<p align="center"><img src=".github/logo.png" width="100" alt="Nlw Unite Logo"></a></p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center"> Um app para gestão de participantes em eventos presenciais </p>
 
-Currently, two official plugins are available:
+<p align="center"> 
+    <a href="#-sobre-o-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;
+    <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;
+    <a href="#-features">Features</a>&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;
+    <a href="#-licença">Licença</a>&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;
+    <a href="#-dicas-para-usar-o-projeto">Dicas de uso</a>
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<p align="center">
+    <img alt="Node version" src="https://img.shields.io/static/v1?label=node&message=20.17.0&color=18181B&labelColor=5354FD">
+    <img alt="Npm version" src="https://img.shields.io/static/v1?label=npm&message=10.8.2&color=18181B&labelColor=990000">
+    <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=49AA26&labelColor=000000">
+</p>
 
-## Expanding the ESLint configuration
+### 💻 Sobre o projeto
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+O projeto permite que o organizador cadastre um evento e abra uma página pública de inscrição. Os participantes inscritos podem emitir uma credencial para check-in no dia do evento. O sistema fará um scan da credencial do participante para permitir a entrada no evento.
 
-- Configure the top-level `parserOptions` property like this:
+<br>
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+<p align="center">
+  <img alt="Preview do projeto desenvolvido." src=".github/preview.png" width="80%">
+</p>
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 🚀 Tecnologias
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- React e Vite
+- Typescript
+- Tailwind
+- SQLite
+- Git e Github
+- Figma
+
+### 🚧 Features
+
+- [ ] O organizador deve poder cadastrar um novo evento
+- [ ] O organizador deve poder visualizar dados de um evento
+- [x] O organizador deve poser visualizar a lista de participantes
+- [ ] O participante deve poder se inscrever em um evento
+- [ ] O participante deve poder visualizar seu crachá de inscrição
+- [ ] O participante deve poder realizar check-in no evento
+- [x] O participante só pode se inscrever em um evento uma única vez
+- [x] O participante só pode se inscrever em eventos com vagas disponíveis
+- [x] O participante só pode realizar check-in em um evento uma única vez
+- [x] O check-in no evento será realizado através de um QRCode
+
+
+### Documentação da API (Swagger)
+
+Para documentação da API com o server em execução, acesse o link: [docs](http://localhost:3333/docs)
+
+### 📜 Licença
+
+Esse projeto está sob a licença MIT.
+
+### 💡 Dicas para usar o projeto
+
+`npm i` ou `npm install` para baixar o node_modules
+
+`npm run dev` para conseguir visualizar o projeto no web (http://localhost:5173)
+
+---
+
+Projeto feito através de uma aula da rocketseat. Alterado e adicionado algumas funcionalidades por KetCode.
