@@ -43,6 +43,7 @@ export function AttendeeList() {
 
   const [total, setTotal] = useState(0)
   const [attendees, setAttendees] = useState<Attendee[]>([])
+  const [attendeesSelected, setAttendeesSelected] = useState([])
 
   const totalPages = Math.ceil(total / 10)
 
@@ -101,6 +102,23 @@ export function AttendeeList() {
     setCurrentPage(totalPages)
   }
 
+  const handleSelect = (id) => {
+    setAttendeesSelected(prev => {
+      return prev.includes(id) ? prev.filter(attendeesSelected => attendeesSelected !== id) : [...prev, id]
+    })
+  }
+
+  const handleSelectAll = (e) => {
+    const isAllChecked = e.target.checked
+
+    if (isAllChecked) {
+      const allAttendeesInPage = attendees.map(item => item.id)
+      setAttendeesSelected(allAttendeesInPage)
+    } else {
+      setAttendeesSelected([])
+    }
+  }
+  
   return (
     <div className='flex flex-col gap-4'>
       <div className="flex gap-3 items-center">
@@ -115,7 +133,7 @@ export function AttendeeList() {
         <thead>
           <TableRow>
             <TableHeader style={{ width: 48 }}>
-              <input type='checkbox' className='size-4 bg-black/20 rounded border border-white/10 checked:bg-orange-400 cursor-pointer' style={{ boxShadow: 'none' }} />
+              <input type='checkbox' checked={attendeesSelected.length === attendees.length} onChange={handleSelectAll} className='size-4 bg-black/20 rounded border border-white/10 checked:bg-orange-400 cursor-pointer' style={{ boxShadow: 'none' }} />
             </TableHeader>
 
             <TableHeader>Código</TableHeader>
@@ -130,7 +148,7 @@ export function AttendeeList() {
             return (
               <TableRow key={attendee.id} className='hover:bg-white/5'>
                 <TableCell>
-                  <input type='checkbox' className='size-4 bg-black/20 rounded border border-white/10 checked:bg-orange-400 cursor-pointer' style={{ boxShadow: 'none' }} />
+                  <input type='checkbox' checked={attendeesSelected.includes(attendee.id)} onChange={() => handleSelect(attendee.id)} className='size-4 bg-black/20 rounded border border-white/10 checked:bg-orange-400 cursor-pointer' style={{ boxShadow: 'none' }} />
                 </TableCell>
                 <TableCell>{attendee.id}</TableCell>
                 <TableCell>
